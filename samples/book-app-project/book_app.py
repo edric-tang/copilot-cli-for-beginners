@@ -1,5 +1,6 @@
 import sys
 from books import BookCollection
+from utils import get_book_details
 
 
 # Global collection instance
@@ -29,15 +30,11 @@ def handle_list():
 def handle_add():
     print("\nAdd a New Book\n")
 
-    title = input("Title: ").strip()
-    author = input("Author: ").strip()
-    year_str = input("Year: ").strip()
-
     try:
-        year = int(year_str) if year_str else 0
+        title, author, year = get_book_details()
         collection.add_book(title, author, year)
         print("\nBook added successfully.\n")
-    except ValueError as e:
+    except Exception as e:
         print(f"\nError: {e}\n")
 
 
@@ -45,9 +42,11 @@ def handle_remove():
     print("\nRemove a Book\n")
 
     title = input("Enter the title of the book to remove: ").strip()
-    collection.remove_book(title)
-
-    print("\nBook removed if it existed.\n")
+    try:
+        success, message = collection.remove_book(title)
+        print(f"\n{message}\n")
+    except Exception as e:
+        print(f"\nError removing book: {e}\n")
 
 
 def handle_find():

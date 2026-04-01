@@ -8,12 +8,57 @@ def print_menu():
 
 
 def get_user_choice() -> str:
-    return input("Choose an option (1-5): ").strip()
+    while True:
+        choice = input("Choose an option (1-5): ").strip()
+        
+        if not choice:
+            print("Error: Please enter a value.")
+            continue
+        
+        if not choice.isdigit():
+            print("Error: Please enter a number.")
+            continue
+        
+        if choice not in ['1', '2', '3', '4', '5']:
+            print("Error: Please enter a number between 1 and 5.")
+            continue
+        
+        return choice
 
 
 def get_book_details():
-    title = input("Enter book title: ").strip()
-    author = input("Enter author: ").strip()
+    """
+    Collect book information from the user through interactive prompts.
+    
+    This function prompts the user to enter a book's title, author, and publication
+    year. It validates that title and author are not empty, re-prompting if necessary.
+    The year is optional and defaults to 0 if invalid input is provided.
+    
+    Returns:
+        tuple: A tuple containing three elements:
+            - title (str): The book's title (guaranteed to be non-empty)
+            - author (str): The book's author (guaranteed to be non-empty)
+            - year (int): The publication year (defaults to 0 if invalid)
+    
+    Examples:
+        >>> title, author, year = get_book_details()
+        Enter book title: The Great Gatsby
+        Enter author: F. Scott Fitzgerald
+        Enter publication year: 1925
+        >>> print(title, author, year)
+        The Great Gatsby F. Scott Fitzgerald 1925
+    """
+    while True:
+        title = input("Enter book title: ").strip()
+        if title:
+            break
+        print("Error: Title cannot be empty.")
+    
+    while True:
+        author = input("Enter author: ").strip()
+        if author:
+            break
+        print("Error: Author cannot be empty.")
 
     year_input = input("Enter publication year: ").strip()
     try:
